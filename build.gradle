@@ -1168,7 +1168,7 @@ publishing {
             groupId 'cccs.iceberg'
             artifactId 'iceberg'
             version getProjectVersion()
-            artifact '{path-to-your-JAR-file-here}'
+            artifact 'build/libs/iceberg-pipeline.jar'
         }
     }
 
