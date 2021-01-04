@@ -9,9 +9,6 @@ trigger:
 pool: "stratus-build-pool"
 
 steps:
-  - bash: |
-      JAVA_HOME_8_X64=/usr/lib/jvm/java-8-openjdk-amd64/jre/
-    displayName: "set java home thing"
   - task: Gradle@2
     inputs:
       workingDirectory: ""
@@ -21,4 +18,4 @@ steps:
       javaHomeOption: "path"
       publishJUnitResults: true
       testResultsFiles: "**/TEST-*.xml"
-      tasks: "build"
+      tasks: "publish"

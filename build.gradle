@@ -626,7 +626,7 @@ project(':iceberg-hive-runtime') {
       exclude group: 'com.github.stephenc.findbugs'
       exclude group: 'commons-pool'
       exclude group: 'javax.annotation'
-      exclude group: 'javax.xml.bind'      
+      exclude group: 'javax.xml.bind'
       exclude group: 'org.apache.commons'
       exclude group: 'org.slf4j'
       exclude group: 'org.xerial.snappy'
@@ -639,7 +639,7 @@ project(':iceberg-hive-runtime') {
       compile project(':iceberg-hive3')
     }
   }
-  
+
   shadowJar {
     configurations = [project.configurations.compile]
 
@@ -653,7 +653,7 @@ project(':iceberg-hive-runtime') {
 
     // Relocate dependencies to avoid conflicts
     relocate 'org.apache.avro', 'org.apache.iceberg.shaded.org.apache.avro'
-    relocate 'org.apache.parquet', 'org.apache.iceberg.shaded.org.apache.parquet'  
+    relocate 'org.apache.parquet', 'org.apache.iceberg.shaded.org.apache.parquet'
     relocate 'com.google', 'org.apache.iceberg.shaded.com.google'
     relocate 'com.fasterxml', 'org.apache.iceberg.shaded.com.fasterxml'
     relocate 'com.github.benmanes', 'org.apache.iceberg.shaded.com.github.benmanes'
@@ -1159,3 +1159,40 @@ apply from: 'baseline.gradle'
 apply from: 'deploy.gradle'
 apply from: 'tasks.gradle'
 
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        myPublication(MavenPublication) {
+            groupId 'cccs.iceberg'
+            artifactId 'iceberg'
+            version getProjectVersion()
+            artifact '{path-to-your-JAR-file-here}'
+        }
+    }
+
+    // Repositories *to* which Gradle can publish artifacts
+    repositories {
+        maven {
+            url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/Misc'
+            credentials {
+                username "Azure DevOps Services"
+                //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
+                password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") != null ? System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") : vstsMavenAccessToken
+            }
+        }
+    }
+}
+
+// Repositories *from* which Gradle can download dependencies; it's the same as above in this example
+repositories {
+    maven {
+        url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/Misc'
+        credentials {
+            username "Azure DevOps Services"
+            //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
+            password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") != null ? System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") : vstsMavenAccessToken
+        }
+    }
+}
