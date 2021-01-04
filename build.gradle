@@ -1175,7 +1175,7 @@ publishing {
     // Repositories *to* which Gradle can publish artifacts
     repositories {
         maven {
-            url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/Misc'
+            url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/misc'
             credentials {
                 username "Azure DevOps Services"
                 //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
@@ -1188,7 +1188,7 @@ publishing {
 // Repositories *from* which Gradle can download dependencies; it's the same as above in this example
 repositories {
     maven {
-        url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/Misc'
+        url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/misc'
         credentials {
             username "Azure DevOps Services"
             //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
