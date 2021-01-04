@@ -1164,11 +1164,11 @@ apply plugin: 'maven-publish'
 
 publishing {
     publications {
-        myPublication(MavenPublication) {
+        iceberg(MavenPublication) {
             groupId 'cccs.iceberg'
             artifactId 'iceberg'
             version getProjectVersion()
-            artifact 'build/libs/iceberg-pipeline.jar'
+            artifact 'build/libs/iceberg.jar'
         }
     }
 

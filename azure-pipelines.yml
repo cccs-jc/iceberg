@@ -18,4 +18,14 @@ steps:
       javaHomeOption: "path"
       publishJUnitResults: true
       testResultsFiles: "**/TEST-*.xml"
+      tasks: "build -x test"
+  - task: Gradle@2
+    inputs:
+      workingDirectory: ""
+      gradleWrapperFile: "gradlew"
+      jdkDirectory: "/usr/lib/jvm/java-11-openjdk-amd64"
+      jdkVersionOption: "1.11"
+      javaHomeOption: "path"
+      publishJUnitResults: true
+      testResultsFiles: "**/TEST-*.xml"
       tasks: "publish"
