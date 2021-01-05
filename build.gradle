@@ -1159,40 +1159,13 @@ apply from: 'baseline.gradle'
 apply from: 'deploy.gradle'
 apply from: 'tasks.gradle'
 
-apply plugin: 'java'
-apply plugin: 'maven-publish'
-
-publishing {
-    publications {
-        iceberg(MavenPublication) {
-            groupId 'cccs.iceberg'
-            artifactId 'iceberg'
-            version getProjectVersion()
-            artifact 'build/libs/iceberg.jar'
-        }
-    }
-
-    // Repositories *to* which Gradle can publish artifacts
-    repositories {
-        maven {
-            url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/misc'
-            credentials {
-                username "Azure DevOps Services"
-                //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
-                password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") != null ? System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") : vstsMavenAccessToken
-            }
-        }
-    }
-}
-
 // Repositories *from* which Gradle can download dependencies; it's the same as above in this example
 repositories {
     maven {
-        url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/misc'
-        credentials {
-            username "Azure DevOps Services"
-            //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
-            password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") != null ? System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") : vstsMavenAccessToken
-        }
+    url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/cccs-stratus/maven/v1'
+    name 'cccs-stratus'
+    authentication {
+        basic(BasicAuthentication)
     }
+}
 }
