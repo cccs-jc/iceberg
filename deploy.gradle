@@ -105,16 +105,14 @@ subprojects {
     }
 
     repositories {
-      maven {
-        credentials {
-          username project.hasProperty('mavenUser') ? "$mavenUser" : ""
-          password project.hasProperty('mavenPassword') ? "$mavenPassword" : ""
+        maven {
+            url 'https://pkgs.dev.azure.com/cccs-stratus/_packaging/misc'
+            credentials {
+                username "Azure DevOps Services"
+                //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
+                password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") != null ? System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") : vstsMavenAccessToken
+            }
         }
-        // upload to the releases repository using ./gradlew -Prelease publish
-        def snapshotsRepoUrl = 'https://repository.apache.org/content/repositories/snapshots'
-        def releasesRepoUrl = 'https://repository.apache.org/service/local/staging/deploy/maven2'
-        url = project.hasProperty('release') ? releasesRepoUrl : snapshotsRepoUrl
-      }
     }
   }
 
